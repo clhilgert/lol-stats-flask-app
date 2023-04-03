@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Stats for {{user}}{% endblock %}
+{% block content %}
+
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Champion</th>
+        <th scope="col">Mastery Level</th>
+        <th scope="col">Mastery Points</th>
+        <th scope="col">Champion Points Since Last Level</th>
+        <th scope="col">Champion Points Until Next Level</th>
+        <th scope="col">Chest Earned</th>
+        <th scope="col">Tokens Earned</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for item in player_data %}
+        <tr>
+          <td><img src="{{ url_for('static', filename='images/' + item.championId.replace(" ", "").replace(".", "").replace("'", "") + '.png') }}" alt="{{ item.championId }}"></td>
+          <td>{{ item.championId }}</td>
+          <td>{{ item.championLevel }}</td>
+          <td>{{ item.championPoints | default("{:,}".format) }}</td>
+          <td>{{ item.championPointsSinceLastLevel | default("{:,}".format) }}</td>
+          <td>{{ item.championPointsUntilNextLevel | default("{:,}".format) }}</td>
+          <td>{{ item.chestGranted }}</td>
+          <td>{{ item.tokensEarned }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
